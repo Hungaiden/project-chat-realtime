@@ -44,6 +44,9 @@ app.use(bodyParser.json());
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
 routeClient(app);
 
+io.on("connection", (socket) => {
+  console.log("Có 1 user kết nối", socket.id);
+});
 server.listen(port, () => {
   console.log(`App listening on port ${port}`);
 });
