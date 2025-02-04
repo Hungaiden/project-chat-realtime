@@ -164,3 +164,16 @@ if(listBtnAddFriend.length > 0) {
   })
 }
 // Chức năng gửi yêu caàu
+
+// Chức năng hủy gửi yêu cầu
+const listBtnCancelFriend = document.querySelectorAll("[btn-cancel-friend]");
+if(listBtnCancelFriend.length > 0) {
+  listBtnCancelFriend.forEach(button => {
+    button.addEventListener("click", () => {
+      const userIdB = button.getAttribute("btn-cancel-friend");
+      button.closest(".box-user").classList.remove("add");
+      socket.emit("CLIENT_CANCEL_FRIEND", userIdB);
+    })
+  })
+}
+// Hết Chức năng hủy gửi yêu cầu
