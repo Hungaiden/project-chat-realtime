@@ -81,3 +81,19 @@ module.exports.logout = async (req, res) => {
 
   res.redirect("/chat");
 };
+
+module.exports.notFriend = async (req, res) => {
+  const userId = res.locals.user.id;
+
+  const users = await User.find({
+    _id: {$ne : userId},
+    deleted: false,
+    status:"active"
+  }).select("id, fullName avatar");
+
+  
+  res.render("client/pages/user/not-friend", {
+    pageTitle: "Danh sách người dùng",
+    users: users
+  });
+};
