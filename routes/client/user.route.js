@@ -30,6 +30,12 @@ router.get(
     userMiddleware.requireAuth,
     controller.accept
 );
+
+router.get(
+    "/friends",
+    userMiddleware.requireAuth,
+    controller.friends
+);
   
 
 module.exports = router;

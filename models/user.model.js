@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema(
         status: String,
         acceptFriends: Array, // Danh sách những người cần chấp nhận
         requestFriends: Array,// Danh sách những người đã gửi yêu cầu đi
-        frienndsList: Array, // Danh sách bạn bè
+        friendsList: Array, // Danh sách bạn bè
         deleted: {
         type: Boolean,
         default: false,

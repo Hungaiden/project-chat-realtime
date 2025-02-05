@@ -116,12 +116,15 @@ module.exports.notFriend = async (req, res) => {
       }
     })
   })
+  const friendsList = res.locals.user.friendsList;
+  const friendsListId = friendsList.map(item => item.userId);
 
   const users = await User.find({
     $and:[
       {_id: { $ne: userIdA }},
       {_id: { $nin : res.locals.user.requestFriends}},// $nin: not in
-      {_id : { $nin : res.locals.user.acceptFriends }}
+      {_id : { $nin : res.locals.user.acceptFriends }},
+      { _id: { $nin: friendsListId }}
     ],
     deleted: false,
     status:"active"
@@ -183,6 +186,7 @@ module.exports.accept = async (req, res) => {
   const userIdA = res.locals.user.id;
   
   _io.once("connection", (socket) => {
+
     // Khi A từ chối kết bạn của B
     socket.on("CLIENT_REFUSE_FRIEND", async (userIdB) => {
       // Xóa id của B trong acceptFriends của A
@@ -210,6 +214,48 @@ module.exports.accept = async (req, res) => {
         });
       }
     })
+
+    // Khi A đồng ý kết bạn của B
+    socket.on("CLIENT_ACCEPTED_FRIEND", async (userIdB) => {
+      // Thêm {userId, roomChatId} của B vào friendsList của A
+      // Xóa id của B trong acceptFriends của A
+      const existBInA = await User.findOne({
+        _id: userIdA,
+        acceptFriends: userIdB
+      });
+      if(existBInA) {
+        await User.updateOne({
+          _id: userIdA
+        }, {
+          $pull: { acceptFriends: userIdB },
+          $push: {
+            friendsList: {
+              userId: userIdB,
+              roomChatId: ""
+            }
+          }
+        });
+      }
+      // Thêm {userId, roomChatId} của A vào friendsList của B
+      // Xóa id của A trong requestFriends của B
+      const existAInB = await User.findOne({
+        _id: userIdB,
+        requestFriends: userIdA
+      });
+      if(existAInB) {
+        await User.updateOne({
+          _id: userIdB
+        }, {
+          $pull: { requestFriends: userIdA },
+          $push: {
+            friendsList: {
+              userId: userIdA,
+              roomChatId: ""
+            }
+          }
+        });
+      }
+    })
   })
   const users = await User.find({
     _id: { $in: res.locals.user.acceptFriends },
@@ -220,6 +266,25 @@ module.exports.accept = async (req, res) => {
 
   res.render("client/pages/user/accept", {
     pageTitle: "Lời mời đã nhận",
+    users: users
+  });
+}
+
+module.exports.friends = async (req, res) => {
+  const userIdA = res.locals.user.id;
+  
+  const friendsList = res.locals.user.friendsList;
+  const friendsListId = friendsList.map(item => item.userId);
+
+  const users = await User.find({
+    _id: { $in: friendsListId },
+    deleted: false,
+    status: "active"
+  }).select("id fullName avatar");
+
+
+  res.render("client/pages/user/friends", {
+    pageTitle: "Danh sách bạn bè",
     users: users
   });
 }
