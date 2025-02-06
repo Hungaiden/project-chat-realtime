@@ -1,7 +1,7 @@
 const User = require("../../models/user.model");
 
 module.exports = (req, res) => {
-    const userIdA = res.locals.user.id;
+  const userIdA = res.locals.user.id;
   
   _io.once("connection", (socket) => {
     // Khi A gửi yêu cầu cho B
@@ -90,6 +90,11 @@ module.exports = (req, res) => {
         _io.emit("SERVER_RETURN_LENGTH_ACCEPT_FRIENDS", {
           userIdB: userIdB,
           length: userB.acceptFriends.length
+        })
+
+        _io.emit("SERVER_RETURN_USER_ID_CANCEL_FRIEND",  {
+          userIdA: userIdA,
+          userIdB: userIdB
         })
     })
 
