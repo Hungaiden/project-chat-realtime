@@ -291,4 +291,18 @@ socket.on("SERVER_RETURN_USER_ID_CANCEL_FRIEND", (data) => {
     }
   }
 })
-// EndSERVER_RETURN_USER_ID_CANCEL_FRIEND
+// End SERVER_RETURN_USER_ID_CANCEL_FRIEND
+
+
+// SERVER_RETURN_STATUS_ONLINE_USER
+socket.on("SERVER_RETURN_STATUS_ONLINE_USER", (data) => {
+  const listFriends = document.querySelector("[list-friend]");
+  if(listFriends) {
+    const user = document.querySelector(`[user-id="${data.userId}"]`);
+    if(user) {
+      const status = user.querySelector("[status]");
+      status.setAttribute("status", data.statusOnline);
+    }
+  }
+})
+// END SERVER_RETURN_STATUS_ONLINE_USER
