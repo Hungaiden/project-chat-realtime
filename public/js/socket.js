@@ -283,11 +283,11 @@ socket.on("SERVER_RETURN_INFO_ACCEPT_FRIENDS", (data) => {
 socket.on("SERVER_RETURN_USER_ID_CANCEL_FRIEND", (data) => {
   // userIdB để tìm vào danh sách của B
   // userIdA để xóa A khỏi giao diện của B
-  const listAcceptFriends = document.querySelector(`[list-accept-friends="${data.userIdB}"]`);
-  if(listAcceptFriends) {
+  const listNotFriends = document.querySelector(`[list-accept-friends="${data.userIdB}"]`);
+  if(listNotFriends) {
     const userA = document.querySelector(`[user-id="${data.userIdA}"]`);
     if(userA) {
-      listAcceptFriends.removeChild(userA);
+      listNotFriends.removeChild(userA);
     }
   }
 })
