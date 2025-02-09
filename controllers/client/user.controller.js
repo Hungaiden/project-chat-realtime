@@ -87,7 +87,7 @@ module.exports.loginPost = async (req, res) => {
 
   req.flash("success", "Đăng nhập thành công!");
 
-  res.redirect("/chat");
+  res.redirect("/");
 };
 
 module.exports.logout = async (req, res) => {
@@ -171,15 +171,24 @@ module.exports.friends = async (req, res) => {
   const userIdA = res.locals.user.id;
   
   const friendsList = res.locals.user.friendsList;
-  const friendsListId = friendsList.map(item => item.userId);
+  const users= [];
 
-  const users = await User.find({
-    _id: { $in: friendsListId },
-    deleted: false,
-    status: "active"
-  }).select("id fullName avatar statusOnline");
+  for (const user of friendsList) {
+    const infoUser = await User.findOne({
+      _id: user.userId,
+      deleted: false,
+      status: "active"
+    });
+    users.push({
+      id: infoUser.id,
+      fullName: infoUser.fullName,
+      avatar: infoUser.avatar,
+      statusOnline: infoUser.statusOnline,
+      roomChatId: user.roomChatId
+    });
+  }
 
-
+  
   res.render("client/pages/user/friends", {
     pageTitle: "Danh sách bạn bè",
     users: users
