@@ -194,3 +194,9 @@ module.exports.friends = async (req, res) => {
     users: users
   });
 }
+
+module.exports.rooms = async (req, res) => {
+  res.render("client/pages/user/rooms", {
+    pageTitle: "Phòng chat"
+  });
+};
