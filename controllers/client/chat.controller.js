@@ -15,7 +15,7 @@ module.exports.index = async (req, res) => {
 
       const dataChat = {
         userId: res.locals.user.id,
-        roomChatId: String,
+        roomChatId: req.params.roomChatId,
         content: data.content,
         images: images,
       };
@@ -45,6 +45,7 @@ module.exports.index = async (req, res) => {
 
    // Lấy tin nhắn mặc định
   const chats = await Chat.find({
+    roomChatId: req.params.roomChatId,
     deleted: false
   });
 

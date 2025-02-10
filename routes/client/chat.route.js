@@ -5,6 +5,6 @@ const controller = require("../../controllers/client/chat.controller");
 
 const middleware = require("../../middlewares/client/chat.middleware");
 
-router.get("/:roomChatId",  controller.index);
+router.get("/:roomChatId", middleware.isAccess , controller.index);
 
 module.exports = router;

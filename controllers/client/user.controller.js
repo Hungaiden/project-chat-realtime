@@ -1,4 +1,5 @@
 const User = require("../../models/user.model");
+const RoomChat = require("../../models/room-chat.model");
 const md5 = require("md5");
 const generateHelper = require("../../helpers/generate.helper");
 
@@ -36,7 +37,7 @@ module.exports.registerPost = async (req, res) => {
   await newUser.save();
   res.cookie("tokenUser", newUser.token);
   req.flash("success", "Đăng ký tài khoản thành công!");
-  res.redirect("/chat");
+  res.redirect("/");
 };
 
 module.exports.login = async (req, res) => {
@@ -196,7 +197,66 @@ module.exports.friends = async (req, res) => {
 }
 
 module.exports.rooms = async (req, res) => {
-  res.render("client/pages/user/rooms", {
-    pageTitle: "Phòng chat"
+  const listRoomChat = await RoomChat.find({
+    "users.userId": res.locals.user.id,
+    typeRoom: "group",
+    deleted:false
   });
+  
+  res.render("client/pages/user/rooms", {
+    pageTitle: "Phòng chat",
+    listRoomChat: listRoomChat
+  });
+};
+
+module.exports.createRoom = async (req, res) => {
+  const friendsList = res.locals.user.friendsList;
+
+  const friendsListFinal = [];
+
+  for(const friend of friendsList) {
+    const infoFriend = await User.findOne({
+      _id: friend.userId,
+      deleted: false
+    });
+
+    if(infoFriend) {
+      friendsListFinal.push({
+        userId: friend.userId,
+        fullName: infoFriend.fullName
+      });
+    }
+  }
+  res.render("client/pages/user/create-room", {
+    pageTitle: "Phòng chat",
+    friendsList: friendsListFinal
+  });
+};
+
+module.exports.createPostRoom = async (req, res) => {
+  const title = req.body.title;
+  const usersId = req.body.usersId;
+
+  const dataRoom = {
+    title: title,
+    typeRoom:"group",
+    users:[]
+  };
+
+  dataRoom.users.push({
+    userId: res.locals.user.id,
+    role: "superAdmin"
+  });
+
+  for(const userId of usersId) {
+    dataRoom.users.push({
+      userId: userId,
+      role: "user"
+    });
+  }
+
+  const room = new RoomChat(dataRoom);
+  await room.save();
+
+  res.redirect(`/chat/${room.id}`);
 };

@@ -38,10 +38,21 @@ router.get(
 );
 
 router.get(
+    "/rooms/create",
+    userMiddleware.requireAuth,
+    controller.createRoom
+);
+
+router.get(
     "/rooms",
     userMiddleware.requireAuth,
     controller.rooms
 );
-  
+
+router.post(
+    "/rooms/create",
+    userMiddleware.requireAuth,
+    controller.createPostRoom
+);
 
 module.exports = router;
