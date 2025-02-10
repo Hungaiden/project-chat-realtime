@@ -25,10 +25,10 @@ const io = new Server(server);
 const routeClient = require("./routes/client/index.route");
 
 
-app.set('views', './views'); // Tìm đến thư mục tên là views
+app.set('views', `${__dirname}/views`); // Tìm đến thư mục tên là views
 app.set('view engine', 'pug'); // template engine sử dụng: pug
 
-app.use(express.static('public')); // Thiết lập thư mục chứa file tĩnh
+app.use(express.static(`${__dirname}/public`)); // Thiết lập thư mục chứa file tĩnh
 
 // Flash
 app.use(cookieParser('JKSLSF'));
