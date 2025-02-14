@@ -5,42 +5,39 @@ header.header
         .inner-logo
           a(href="/")
             img(src="/images/logo-web-chat.svg", alt="Logo")
-
-      .col-5
-        form(
-          action="/products/search"
-          method="GET"
-        ) 
-          div(class="form-group d-flex mb-0")
-            input(
-              type="text"
-              placeholder="Nhập từ khóa..."
-              class="form-control"
-              name="keyword"
-              
-            )
-            button(
-              type="submit"
-              class="btn btn-primary"
-            ) Tìm
       
-      .col-4
+      .col-9
         .inner-menu
-          ul
-            li
-              a(href="/chat") Trang chủ
-            
-            if(user)
-              li 
-                a(href="/user/profile") #{user.fullName}
+          nav
+            ul
               li
-                a(href="/user/friends") Bạn bè
-              li
-                a(href="/user/rooms") Phòng chat
-              li
-                a(href="/user/logout") Đăng xuất
-            else
-              li
-                a(href="/user/login") Đăng nhập
-              li
-                a(href="/user/register") Đăng ký
+                a(href="/")
+                  i.fas.fa-home
+                  |  Trang chủ
+              
+              if (user)
+                li
+                  a(href="/user/profile")
+                    i.fas.fa-user-circle
+                    |  #{user.fullName}
+                li
+                  a(href="/user/friends")
+                    i.fas.fa-users
+                    |  Bạn bè
+                li
+                  a(href="/user/rooms")
+                    i.fas.fa-comments
+                    |  Phòng chat
+                li
+                  a(href="/user/logout")
+                    i.fas.fa-sign-out-alt
+                    |  Đăng xuất
+              else
+                li
+                  a(href="/user/login")
+                    i.fas.fa-sign-in-alt
+                    |  Đăng nhập
+                li
+                  a(href="/user/register")
+                    i.fas.fa-user-plus
+                    |  Đăng ký

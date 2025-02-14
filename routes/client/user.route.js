@@ -55,4 +55,9 @@ router.post(
     controller.createPostRoom
 );
 
+router.get(
+    "/profile", 
+    userMiddleware.requireAuth,
+    controller.profile
+);
 module.exports = router;

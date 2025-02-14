@@ -260,3 +260,9 @@ module.exports.createPostRoom = async (req, res) => {
 
   res.redirect(`/chat/${room.id}`);
 };
+
+module.exports.profile = async(req, res) => {
+  res.render("client/pages/user/profile", {
+      pageTitle: "Thông tin tài khoản"
+  });
+}
