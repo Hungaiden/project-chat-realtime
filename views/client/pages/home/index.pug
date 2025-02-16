@@ -4,6 +4,15 @@ include ../../mixins/box-head.pug
 block main
   .container.my-3
     include ../../partials/list-btn-user.pug
+    //- Phần chào mừng
+    .welcome-section.text-center.py-5
+      .card.shadow-lg.p-4.bg-light.rounded
+        h1.text-primary Chào mừng đến với nền tảng nhắn tin của chúng tôi!
+        p.lead.text-secondary Kết nối với bạn bè và gia đình một cách nhanh chóng với dịch vụ nhắn tin liền mạch.
+        //-img.img-fluid.mt-3(src='https://res.cloudinary.com/dkgjp067m/image/upload/v1739712129/a0db9dwam4dkupj8ilwa.png', alt='Welcome Image')
+        a.btn.btn-primary.mt-4(href='/user/friends') Bắt đầu trò chuyện
+
+  
 
     
 
