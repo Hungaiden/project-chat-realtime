@@ -10,6 +10,9 @@ const flash = require('express-flash');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
+// ghi de de su dung pt PATCH trong HTML
+const methodOverride = require('method-override')
+
 require('dotenv').config();
 
 const port = process.env.PORT;
@@ -29,6 +32,9 @@ app.set('views', `${__dirname}/views`); // Tìm đến thư mục tên là views
 app.set('view engine', 'pug'); // template engine sử dụng: pug
 
 app.use(express.static(`${__dirname}/public`)); // Thiết lập thư mục chứa file tĩnh
+
+// override with POST having ?_method=DELETE
+app.use(methodOverride('_method'));
 
 // Flash
 app.use(cookieParser('JKSLSF'));

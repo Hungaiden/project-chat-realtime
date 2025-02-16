@@ -17,5 +17,8 @@ block main
               p Email: <b>#{user.email}</b>
             if(user.phone)
               p Số điện thoại: <b>#{user.phone}</b>
-            
+            a(
+            href="/user/profile/edit" 
+            class="btn btn-primary mt-3"
+            ) Chỉnh sửa thông tin
         

@@ -266,3 +266,19 @@ module.exports.profile = async(req, res) => {
       pageTitle: "Thông tin tài khoản"
   });
 }
+
+module.exports.editProfile = async(req, res) => {
+  res.render("client/pages/user/edit-profile", {
+      pageTitle: "Chỉnh sửa thông tin"
+  });
+}
+
+module.exports.editProfilePatch = async(req, res) => {
+  await User.updateOne({
+    _id: res.locals.user.id,
+    deleted: false
+  }, req.body);
+
+  req.flash("success", "Thay đổi thành công");
+  res.redirect(req.get("Referer") || "/");
+}

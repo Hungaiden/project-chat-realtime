@@ -8,8 +8,9 @@ block main
     .row
       .col-12
         form(
-          action=`/user/rooms/create`
+          action=`/user/rooms/create?_method=PATCH`
           method="POST"
+          enctype="multipart/form-data"
         )
           div(class="form-group")
             label(for="title") Tiêu đề
@@ -35,6 +36,20 @@ block main
                   class="form-check-label"
                   for=`user-${friend.userId}`
                 ) #{friend.fullName}
+          label(for="avatar") Avatar
+            input(
+              type="file"
+              class="form-control-file"
+              id="avatar"
+              name="avatar"
+              accept="image/*"
+              upload-image-input
+            )
+            img(
+              src=""
+              class="image-preview"
+              upload-image-preview
+            )     
           div(class="form-group")
             button(
               type="submit"

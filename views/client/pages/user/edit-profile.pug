@@ -1,0 +1,67 @@
+extends ../../layouts/default.pug
+block main
+  .container
+    .card.shadow-sm.p-4
+      h1.text-center.mb-4.text-primary #{pageTitle}
+      form(
+        action=`/user/profile/edit?_method=PATCH`
+        method="POST"
+        enctype="multipart/form-data"
+        class="needs-validation"
+      )
+        .form-group
+          label(for="fullName" class="font-weight-bold") Họ tên *
+          input(
+            type="text"
+            class="form-control rounded"
+            id="fullName"
+            name="fullName"
+            required
+            value=user.fullName
+          )
+        
+        .form-group
+          label(for="email" class="font-weight-bold") Email *
+          input(
+            type="email"
+            class="form-control rounded"
+            id="email"
+            name="email"
+            required
+            value=user.email
+          )
+
+        .form-group
+          label(for="phone" class="font-weight-bold") Số điện thoại
+          input(
+            type="text"
+            class="form-control rounded"
+            id="phone"
+            name="phone"
+            value=user.phone
+          )
+        
+        div(
+          class="form-group"
+          upload-image
+        )
+          label(for="avatar") Avatar
+            input(
+              type="file"
+              class="form-control-file"
+              id="avatar"
+              name="avatar"
+              accept="image/*"
+              upload-image-input
+            )
+            img(
+              src=user.avatar
+              class="image-preview"
+              upload-image-preview
+            )
+        
+        .form-group.text-center
+          button(
+            type="submit"
+            class="btn btn-primary px-4 py-2 rounded-pill"
+          ) Cập nhật

@@ -18,7 +18,9 @@
     "express-flash": "^0.0.2",
     "express-session": "^1.18.1",
     "md5": "^2.3.0",
+    "method-override": "^3.0.0",
     "mongoose": "^8.9.5",
+    "multer": "^1.4.5-lts.1",
     "pug": "^3.0.3",
     "socket.io": "^4.8.0",
     "streamifier": "^0.1.1"
