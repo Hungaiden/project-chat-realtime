@@ -21,10 +21,17 @@ block main
                 a(
                   href=`/chat/${item.roomChatId}`
                   class="btn btn-sm btn-primary mr-1"
+                  btn-chat-friend
                 ) Nhắn tin
                 button(
                   class="btn btn-sm btn-secondary mr-1"
+                  btn-delete-friend=item.id
                 ) Xóa
+                button(
+                  class="btn btn-sm btn-secondary mr-1"
+                  btn-deleted-friend
+                  disabled
+                ) Đã xóa
               div(
                 class="inner-status"
                 status=item.statusOnline

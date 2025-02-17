@@ -149,8 +149,9 @@ if(elementListTyping) {
         }
     })
 }
-
 // END SEVER_RETURN_TYPING
+
+// Chức năng gửi yêu caàu
 const listBtnAddFriend = document.querySelectorAll("[btn-add-friend]");
 if(listBtnAddFriend.length > 0) {
   listBtnAddFriend.forEach(button => {
@@ -163,7 +164,7 @@ if(listBtnAddFriend.length > 0) {
     });
   })
 }
-// Chức năng gửi yêu caàu
+// Hết Chức năng gửi yêu caàu
 
 // Chức năng hủy gửi yêu cầu
 const listBtnCancelFriend = document.querySelectorAll("[btn-cancel-friend]");
@@ -206,6 +207,18 @@ if(listBtnAcceptedFriend.length > 0) {
 }
 // Hết Chức năng chấp nhận kết bạn
 
+// Chức năng xoá bạn bè
+const listBtnDeleteFriend = document.querySelectorAll("[btn-delete-friend]");
+if(listBtnDeleteFriend.length > 0) {
+  listBtnDeleteFriend.forEach(button => {
+    button.addEventListener("click", () => {
+      const userIdB = button.getAttribute("btn-delete-friend");
+      button.closest(".box-user").classList.add("deleted");
+      socket.emit("CLIENT_DELETE_FRIEND", userIdB);
+    })
+  })
+}
+// Hết Chức năng xoá bạn bè
 
 // SERVER_RETURN_LENGTH_ACCEPT_FRIENDS
 socket.on("SERVER_RETURN_LENGTH_ACCEPT_FRIENDS", (data) => {

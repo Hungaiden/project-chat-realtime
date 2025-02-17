@@ -184,6 +184,38 @@ module.exports = (req, res) => {
         });
       }
     })
-  })
 
+  // Khi A xoá B khỏi danh sách bạn bè
+    socket.on("CLIENT_DELETE_FRIEND", async (userIdB) => {
+      // Xóa id của A trong friendsList của B
+      const existAInB = await User.findOne({
+        _id: userIdB,
+        friendsList: {
+          $elemMatch: { userId: userIdA } // Tìm object có userId tương ứng
+        }
+      });
+      
+      if(existAInB) {
+        await User.updateOne({
+          _id: userIdB
+        }, {
+          $pull: { friendsList: { userId: userIdA } }
+        });
+      }
+      // Xóa id của B trong friendsList của A
+      const existBInA = await User.findOne({
+        _id: userIdA,
+        friendsList: {
+          $elemMatch: { userId: userIdB } // Tìm object có userId tương ứng
+        }
+      });
+      if(existBInA) {
+        await User.updateOne({
+          _id: userIdA
+        }, {
+          $pull: { friendsList: { userId: userIdB } }
+        });
+      }
+  })
+  })
 }

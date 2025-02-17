@@ -323,6 +323,20 @@
 .box-user .inner-status[status="online"] {
   opacity: 1;
 }
+
+
+.box-user [btn-deleted-friend] {
+  display: none;
+}
+.box-user.deleted [btn-chat-friend] {
+  display: none;
+}
+.box-user.deleted [btn-delete-friend] {
+  display: none;
+}
+.box-user.deleted [btn-deleted-friend] {
+  display: inline-block;
+}
 /* End box-user */
 
 /* box-room */
